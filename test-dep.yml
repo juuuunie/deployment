@@ -1,31 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: svelte
+  name: dep-fast
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: svelte
+      app: fast
   template:
     metadata:
       labels:
-        app: svelte
+        app: fast
     spec:
       containers:
-        - name: svelte
-          image: 734793106345.dkr.ecr.ap-northeast-2.amazonaws.com/svel:2
-          ports:
-            - containerPort: 80
+      - name: con-fast
+        image: 734793106345.dkr.ecr.ap-northeast-2.amazonaws.com/fast:2
+        ports:
+        - containerPort: 8000
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: svelte
+  name: fast
 spec:
-  type: LoadBalancer
-  ports:
-    - port: 80
-      targetPort: 80
   selector:
-    app: svelte
+    app: fast
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+#  type: LoadBalancer
